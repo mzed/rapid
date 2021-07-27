@@ -31,7 +31,7 @@ endif ()
 
 # Add rapidlib, if it exists
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src)
-file(GLOB RAPIDLIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src/*.cpp")
+file(GLOB RAPIDLIB_SRC "${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src/*.cpp")
 
 # Generate a project for every folder in the "source/projects" folder
 SUBDIRLIST(PROJECT_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/source/projects)
