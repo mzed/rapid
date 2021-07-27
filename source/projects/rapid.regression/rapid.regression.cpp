@@ -21,25 +21,40 @@ public:
     outlet<> output_2{ this, "(bang) when finished training" };
 
     //TODO: Should have some attributes for MLP parameters
-    attribute<symbol>  dict_name{ this, "dict name", ""};
+    //attribute<symbol>  dict_name{ this, "dict name", ""};
+    
+    argument<anything> dict_arg{ this, "dictionary-syntax", "Dictionary to train from." };
 
-    argument<symbol> dict_arg
-    { 
-        this, "dict_name", "Name of dictionary containing training data",
-        MIN_ARGUMENT_FUNCTION 
-        {
-            dictName = arg;
+    //rapid_regression(const atoms& args = {}) 
+    //{
+    //    if (!args.empty()) training_dict = dict(args[0]);
+    //}
+
+    message<> dictionary{ this, "dictionary", "Use a dictionary to define the pattern of bangs produced.",
+      MIN_FUNCTION {
+          dict d {args[0]};
+
+          return {};
+      }
+    };
+
+    message<> m_train{ this, "train", "train network from dictionary",
+        MIN_FUNCTION{
+            cout << "training..." << c74::min::endl;
+            output_2.send("bang");
+            output_1.send(training_dict["test"]);
+            return {};
         }
     };
 
-    message<> predict { this, "list", "predict an output", run };
-
-
     c74::min::function run = MIN_FUNCTION
     {
-        std::cout << "does nothing" << std::endl;
+        cout << "does nothing" << c74::min::endl;
         return {};
     };
+
+
+    message<> list{ this, "list", "predict an output", run };
 
     // post to max window == but only when the class is loaded the first time
     message<> maxclass_setup
@@ -47,14 +62,16 @@ public:
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            std::cout << "rapid.regression object by Michael F. Zbyszynski, v1.0 ©2021" << std::endl;
+            cout << "rapid.regression object by Michael F. Zbyszynski, v1.0 ©2021" << c74::min::endl;
             return {};
         }
     };
 
 private:
     string dictName;
-    rapidLib::regression regressionModels;
+    dict training_dict{ symbol(true) };
+   
+    //rapidLib::regression regressionModels;
 
 };
 
