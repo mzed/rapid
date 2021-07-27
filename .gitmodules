@@ -1,0 +1,9 @@
+[submodule "source/RapidLib"]
+	path = source/RapidLib
+	url = https://github.com/mzed/RapidLib.git
+[submodule "source/min-api"]
+	path = source/min-api
+	url = https://github.com/Cycling74/min-api
+[submodule "source/min-lib"]
+	path = source/min-lib
+	url = https://github.com/Cycling74/min-lib.git
