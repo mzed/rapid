@@ -1,0 +1,24 @@
+{
+	"author" : "Francesco Di Maggio, Sam Parke-Wolf, Atau Tanaka, Martin Townley, and Michael Zbyszyński",
+	"description" : "A Max implementation of the RapidLib",
+	"homepatcher" : "rapidmax.maxpat",
+	"max_version_min" : "8.0", "max_version_max" : "none",
+	"name" : "@C74_PACKAGE_NAME@",
+	"os" : {
+		"macintosh" : {
+			"platform" : [ "x64" ],
+			"min_version" : "none"
+		},
+		"windows" : {
+			"platform" : [ "x64" ],
+			"min_version" : "none"
+		}
+	},
+	"package_extra" : {
+		"reverse_domain" : "com.mikezed",
+		"copyright" : "Copyright (c) 2021 Michael Zbyszynski"
+	},
+	"tags" : ["gesture-sound interaction design", "interactive machine learning"],
+	"version" : "@GIT_VERSION_MAJ@.@GIT_VERSION_MIN@.@GIT_VERSION_SUB@",
+	"website" : "http://www.github.com/mzed/rapid"
+}
