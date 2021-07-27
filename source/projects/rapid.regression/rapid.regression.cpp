@@ -4,7 +4,7 @@
 ///	@license	Use of this source code is governed by the GPL v3 License found in the License.md file.
 
 #include "c74_min.h"
-//#include "rapidLib.h"
+#include "rapidLib.h"
 
 using namespace c74::min;
 
@@ -16,98 +16,30 @@ public:
     MIN_AUTHOR{ "mzed" };
     MIN_RELATED{ "rapid.classification" };
 
-    inlet<>  inlet_x{ this, "(float or bang) bang calculates or x coordinate of previous point in attractor" };
-    inlet<>  inlet_y{ this, "(float) y coordinate of previous point in attractor" };
-    inlet<>  inlet_z{ this, "(float) z coordinate of previous point in attractor" };
-    inlet<>  inlet_h{ this, "(float) h timestep value for attractor" };
-    outlet<> outlet_x{ this, "(float) x coordinate" };
-    outlet<> outlet_y{ this, "(float) y coordinate" };
-    outlet<> outlet_z{ this, "(float) z coordinate" };
+    inlet<> input{ this, "vector of data, or commands to object" };
+    outlet<> output_1{ this, "(list) prediction based on input" };
+    outlet<> output_2{ this, "(bang) when finished training" };
 
-    attribute<double> l_h { this, "timestep", 0.01 };
+    //TODO: Should have some attributes for MLP parameters
+    attribute<symbol>  dict_name{ this, "dict name", ""};
 
-    argument<number> x_arg
+    argument<symbol> dict_arg
     { 
-        this, "x", "Initial x value.",
+        this, "dict_name", "Name of dictionary containing training data",
         MIN_ARGUMENT_FUNCTION 
         {
-            currentX = arg;
+            dictName = arg;
         }
     };
 
-    argument<number> y_arg
-    { 
-        this, "y", "Initial y value.",
-        MIN_ARGUMENT_FUNCTION 
-        {
-            currentY = arg;
-        }
-    };
+    message<> predict { this, "list", "predict an output", run };
 
-    argument<number> z_arg
-    { 
-        this, "z", "Initial z value.",
-        MIN_ARGUMENT_FUNCTION 
-        {
-            currentZ = arg;
-        }
-    };
 
-    argument<number> h_arg
-    { this, "h", "Initial h (timestep) value.",
-        MIN_ARGUMENT_FUNCTION 
-        {
-            l_h = arg;
-        }
-    };
-
-    message<> ints
+    c74::min::function run = MIN_FUNCTION
     {
-        this, "float", "set variable",
-        MIN_FUNCTION
-        {
-            switch (inlet)
-            {
-                case 0:
-                    currentX = args[0];
-                case 1:
-                    currentY = args[0];
-                case 2:
-                    currentZ = args[0];
-                default:
-                    assert(false);
-            }
-            return {};
-        }
+        std::cout << "does nothing" << std::endl;
+        return {};
     };
-
-    message<> bang
-    {
-        this, "bang", "Calculate the next point.",
-        MIN_FUNCTION
-        {
-            double xNew;
-            double yNew;
-            double zNew;
-
-            // calculate the attractor
-            zNew = currentZ + (l_h * ((currentX * currentY) - ((8.0 / 3.0) * currentZ)));
-            yNew = currentY + (l_h * ((28.0 * currentX - currentY) - (currentX * currentZ)));
-            xNew = currentX + ((l_h * 10.0) * (currentY - currentX));
-
-            // save the calculated values
-            currentX = xNew;
-            currentY = yNew;
-            currentZ = zNew;
-
-            // output the calculated values
-            outlet_z.send(zNew);
-            outlet_y.send(yNew);
-            outlet_x.send(xNew);
-            return {};
-        }
-    };
-
 
     // post to max window == but only when the class is loaded the first time
     message<> maxclass_setup
@@ -121,9 +53,8 @@ public:
     };
 
 private:
-    double currentX = 0.6;
-    double currentY = 0.6;
-    double currentZ = 0.6;
+    string dictName;
+    rapidLib::regression regressionModels;
 
 };
 
