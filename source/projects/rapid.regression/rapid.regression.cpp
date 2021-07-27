@@ -4,7 +4,7 @@
 ///	@license	Use of this source code is governed by the GPL v3 License found in the License.md file.
 
 #include "c74_min.h"
-#include "rapidLib.h"
+//#include "rapidLib.h"
 
 using namespace c74::min;
 
