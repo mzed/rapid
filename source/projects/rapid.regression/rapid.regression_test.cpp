@@ -1,18 +1,18 @@
 ﻿/// @file
 ///	@ingroup 	mzed
-///	@copyright	Copyright 2002-2021 Michael Zbyszyński  All rights reserved.
+///	@copyright	Copyright 2021 Michael Zbyszyński  All rights reserved.
 ///	@license	Use of this source code is governed by the MIT License found in the License.md file.
 
 #include "c74_min_unittest.h"     // required unit test header
-#include "mzed.lorenz.cpp"    // need the source of our object so that we can access it
+#include "rapid.regression.cpp"    // need the source of our object so that we can access it
 
 SCENARIO("object produces correct output") {
     ext_main(nullptr);
 
-    GIVEN("An instance of lorenz") {
+    GIVEN("An instance of rapid.regression") {
 
-        test_wrapper<mzed_lorenz> an_instance;
-        mzed_lorenz&              my_object = an_instance;
+        test_wrapper<rapid_regression> an_instance;
+        rapid_regression&              my_object = an_instance;
 
         /*
         // check that default attr values are correct

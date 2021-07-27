@@ -1,19 +1,20 @@
 ﻿/// @file
-///	@ingroup 	mzed
-///	@copyright	Copyright 2002-2021 Michael Zbyszyński  All rights reserved.
+///	@ingroup 	rapid
+///	@copyright	Copyright 2021 Michael Zbyszyński  All rights reserved.
 ///	@license	Use of this source code is governed by the GPL v3 License found in the License.md file.
 
 #include "c74_min.h"
+#include "rapidLib.h"
 
 using namespace c74::min;
 
-class mzed_lorenz : public object<mzed_lorenz>
+class rapid_regression : public object<rapid_regression>
 {
 public:
-    MIN_DESCRIPTION{ "Generate a Lorenz attractor." };
-    MIN_TAGS{ "chaos" };
+    MIN_DESCRIPTION{ "Train and run a regression model." };
+    MIN_TAGS{ "interactive machine learning" };
     MIN_AUTHOR{ "mzed" };
-    MIN_RELATED{ "roessler" };
+    MIN_RELATED{ "rapid.classification" };
 
     inlet<>  inlet_x{ this, "(float or bang) bang calculates or x coordinate of previous point in attractor" };
     inlet<>  inlet_y{ this, "(float) y coordinate of previous point in attractor" };
@@ -114,7 +115,7 @@ public:
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            cout << "lorenz object by Michael F. Zbyszyński, v3.0 ©2002-2021" << endl;
+            std::cout << "rapid.regression object by Michael F. Zbyszynski, v1.0 ©2021" << std::endl;
             return {};
         }
     };
@@ -126,4 +127,4 @@ private:
 
 };
 
-MIN_EXTERNAL(mzed_lorenz);
+MIN_EXTERNAL(rapid_regression);

@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(mzed)
 
-
 string(REGEX REPLACE "(.*)/" "" THIS_PACKAGE_NAME "${CMAKE_CURRENT_SOURCE_DIR}")
-
 
 if (${CMAKE_GENERATOR} MATCHES "Xcode")
          if (${XCODE_VERSION} VERSION_LESS 10)
@@ -12,8 +10,7 @@ if (${CMAKE_GENERATOR} MATCHES "Xcode")
         endif ()
 endif ()
 
-
-# Fetch the correct version of the min-api
+# Update submodules
 message(STATUS "Updating Git Submodules")
 execute_process(
     COMMAND				git submodule update --init --recursive
@@ -24,17 +21,19 @@ execute_process(
 # Misc setup and subroutines
 include(${CMAKE_CURRENT_SOURCE_DIR}/source/min-api/script/min-package.cmake)
 
-
 # Add unit tests for the API
 enable_testing()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/source/min-api)
 
-
-# Add the Lib, if it exists
+# Add the min-lib, if it exists
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/source/min-lib/CMakeLists.txt")
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/source/min-lib)
 endif ()
 
+# Add rapidlib, if it exists
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/CMakeLists.txt")
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib)
+endif ()
 
 # Generate a project for every folder in the "source/projects" folder
 SUBDIRLIST(PROJECT_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/source/projects)
