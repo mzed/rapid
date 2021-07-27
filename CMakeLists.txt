@@ -17,7 +17,6 @@ execute_process(
     WORKING_DIRECTORY	"${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-
 # Misc setup and subroutines
 include(${CMAKE_CURRENT_SOURCE_DIR}/source/min-api/script/min-package.cmake)
 
@@ -31,7 +30,8 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/source/min-lib/CMakeLists.txt")
 endif ()
 
 # Add rapidlib, if it exists
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src)
+file(GLOB RAPIDLIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src/*.cpp")
 
 # Generate a project for every folder in the "source/projects" folder
 SUBDIRLIST(PROJECT_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/source/projects)
