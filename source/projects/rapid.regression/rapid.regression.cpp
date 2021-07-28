@@ -57,50 +57,25 @@ public:
                     return 1;
                 }
             }
-        }
+         }
         return 0;
     }
 
     c74::min::function train = MIN_FUNCTION
     {
-        dict training_dict { args[0] };
-        c74::max::t_symbol** keys = NULL;
-        long numkeys = 0;
-        c74::max::dictionary_getkeys(training_dict, &numkeys, &keys);
-        cout << "Training on " << numkeys << " examples." << c74::min::endl;
-
-
-        //Variables for subdictionaries.
-        c74::max::t_object* subdict_obj = nullptr;
-        //dict* subdict = nullptr;
-        long       numsubkeys = 0;
-        c74::max::t_symbol** subkeys = NULL;
-
-        for (size_t i = 0; i < numkeys; ++i)
-        {
-            c74::max::dictionary_getdictionary(training_dict, keys[i], &subdict_obj);
-            dict subdict { subdict_obj };
-            cout << "sub " << subdict.at("input") << c74::min::endl;
-        }
-
-        cout << "dict2 " << training_dict.at(keys[0]) << c74::min::endl;
-        return {};
-    };
-
-    c74::min::function train_old = MIN_FUNCTION
-    {
         using namespace c74::max;
-        long i, j;
+        std::vector<rapidLib::trainingExample> trainingSet;
         dict minDict { args[0] };
         t_dictionary* maxDict = static_cast<c74::max::t_object*>(minDict);
 
         if (maxDict) 
         {
-            cout << "Found dictionary " << args[0] << c74::min::endl;
+            cout << "Found dictionary." << c74::min::endl;
         }
         else
         {
             cerr << args[0] << " is not a dictionary." << c74::min::endl;
+            return {};
         }
 
         t_symbol** keys = NULL;
@@ -113,8 +88,7 @@ public:
             cerr << "Dictionary is empty" << c74::min::endl;
             //c74::max::free_dict(maxDict, numkeys, keys);
             return {};
-         }
-
+        }
 
         //Variables for subdictionaries.
         t_object* subdict_obj = nullptr;
@@ -122,9 +96,8 @@ public:
         long numsubkeys = 0;
         t_symbol** subkeys = NULL;
 
-        for (i = 0; i < numkeys; ++i)
+        for (size_t i = 0; i < numkeys; ++i)
         {
-
             //Make sure the elements of the dict are the right type.
             if (!dictionary_entryisdictionary(maxDict, keys[i]))
             {
@@ -145,7 +118,7 @@ public:
             bool has_input = false, has_output = false;
 
             //Getting the atoms in the subdict
-            for (j = 0; j < numsubkeys; j++)
+            for (size_t j = 0; j < numsubkeys; ++j)
             {
                 if (strcmp(subkeys[j]->s_name,  "input") == 0)
                 {
@@ -174,21 +147,18 @@ public:
                 }
             }
 
-            rapidLib::trainingExample te;
-            if (rapidmax_fill_training_example(te.input, input_size, input_atoms) || rapidmax_fill_training_example(te.output,output_size, output_atoms))
+            rapidLib::trainingExample tempExample;
+            if (rapidmax_fill_training_example(tempExample.input, input_size, input_atoms) || rapidmax_fill_training_example(tempExample.output,output_size, output_atoms))
             {
                 cerr << "Contents of sub-dictionary " << i << " input or output was not of a readable type(Long, Float)";
                 return {};
             }
 
             //Push the new training example into the global training set.
-            trainingSet.push_back(te);
+            trainingSet.push_back(tempExample);
         }
         cout << "All training data is correctly formatted" << c74::min::endl;
 
-        return {};
-
-        //TRAIN
         trained = regressionModels.train(trainingSet);
 
         if (trained)
@@ -200,9 +170,9 @@ public:
         {
             cout << "Model is not trained" << c74::min::endl;
         }
-    };
 
-    message<> dictionary{ this, "dictionary", "Use a dictionary to define the pattern of bangs produced.", train_old };
+        return {};
+    };
 
     c74::min::function run = MIN_FUNCTION
     {
@@ -210,6 +180,7 @@ public:
         return {};
     };
 
+    message<> dictionary{ this, "dictionary", "Use a dictionary to define the pattern of bangs produced.", train };
 
     message<> list{ this, "list", "predict an output", run };
 
@@ -219,16 +190,14 @@ public:
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            cout << "rapid.regression object by Michael F. Zbyszynski, v1.0 copyright 2021" << c74::min::endl;
+            cout << "rapid.regression by Michael F. Zbyszynski, v1.0 copyright 2021" << c74::min::endl;
             return {};
         }
     };
 
 private:
     rapidLib::regression regressionModels;
-    std::vector<rapidLib::trainingExample> trainingSet;
     bool trained = false;
-
 };
 
 MIN_EXTERNAL(rapid_regression);
