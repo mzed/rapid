@@ -16,9 +16,9 @@ public:
     MIN_AUTHOR{ "mzed" };
     MIN_RELATED{ "rapid.classification" };
 
-    inlet<> input{ this, "vector of data, or commands to object" };
-    outlet<> output_1{ this, "(list) prediction based on input" };
-    outlet<> output_2{ this, "(bang) when finished training", "bang" };
+    inlet<> inlet { this, "vector of data, or commands to object" };
+    outlet<> outlet_1{ this, "(list) prediction based on input" };
+    outlet<> outlet_2{ this, "(bang) when finished training", "bang" };
 
     //TODO: Should have some attributes for MLP parameters
     //attribute<symbol>  dict_name{ this, "dict name", ""};
@@ -164,7 +164,7 @@ public:
         if (trained)
         {
             cout << "Model is trained" << c74::min::endl;
-            output_2.send("bang");
+            outlet_2.send("bang");
         }
         else
         {
@@ -176,7 +176,16 @@ public:
 
     c74::min::function run = MIN_FUNCTION
     {
-        cout << "does nothing" << c74::min::endl;
+        //TODO: check size?
+        if (!trained)
+        {
+            cerr << "Train before running." << c74::min::endl;
+            return {};
+        }
+
+        std::vector<double> inputData = from_atoms<std::vector<double>>(args);
+        outlet_1.send(to_atoms<std::vector<double>>(regressionModels.run(inputData)));
+        
         return {};
     };
 
@@ -184,13 +193,14 @@ public:
 
     message<> list{ this, "list", "predict an output", run };
 
-    // post to max window == but only when the class is loaded the first time
     message<> maxclass_setup
     { 
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            cout << "rapid.regression by Michael F. Zbyszynski, v1.0 copyright 2021" << c74::min::endl;
+            cout << "rapid.regression v1.0" << c74::min::endl;
+            cout << "by Sam Parke-Wolf, Marting Townley & Michael Zbyszynski" << c74::min::endl;
+            cout << "Copyright (c) 2021 Goldsmiths, University of London" << c74::min::endl;
             return {};
         }
     };
