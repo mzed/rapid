@@ -66,11 +66,10 @@ public:
         using namespace c74::max;
         std::vector<rapidLib::trainingExample> trainingSet;
         dict minDict { args[0] };
-        t_dictionary* maxDict = static_cast<c74::max::t_object*>(minDict);
-
-        if (maxDict) 
+        
+        if (minDict.valid()) 
         {
-            cout << "Found dictionary." << c74::min::endl;
+            cout << "Found dictionary " << minDict.name() << c74::min::endl;
         }
         else
         {
@@ -78,17 +77,19 @@ public:
             return {};
         }
 
-        t_symbol** keys = NULL;
-        long       numkeys = 0;
-        dictionary_getkeys(maxDict, &numkeys, &keys);
-        cout << "Training on " << numkeys << " examples." << c74::min::endl;
+        t_dictionary* maxDict = static_cast<c74::max::t_object*>(minDict);
 
+        t_symbol** keys = NULL;
+        long numkeys = 0;
+        dictionary_getkeys(maxDict, &numkeys, &keys);
+        
         if (!numkeys)
         {
             cerr << "Dictionary is empty" << c74::min::endl;
-            //c74::max::free_dict(maxDict, numkeys, keys);
+            object_free(maxDict);
             return {};
         }
+        cout << "Training on " << numkeys << " examples." << c74::min::endl;
 
         //Variables for subdictionaries.
         t_object* subdict_obj = nullptr;
@@ -102,6 +103,7 @@ public:
             if (!dictionary_entryisdictionary(maxDict, keys[i]))
             {
                 cout << "Dictionary element " << i << " is not a sub-dictionary" << c74::min::endl;
+                object_free(maxDict); 
                 return {};
             }
 
@@ -114,7 +116,7 @@ public:
 
             long    input_size = 0, output_size = 0;
             t_atom* input_atoms,* output_atoms = NULL;
-
+           
             bool has_input = false, has_output = false;
 
             //Getting the atoms in the subdict
@@ -135,6 +137,7 @@ public:
             if (!has_input || !has_output)
             {
                 cerr << "Contents of sub-dicitionary " << i << " does not have an input and output" << c74::min::endl;
+                object_free(maxDict); 
                 return {};
             }
 
@@ -143,14 +146,19 @@ public:
                 if (trainingSet[i - 1].input.size() != input_size || trainingSet[i - 1].output.size() != output_size)
                 {
                     cerr << "Dimentions of sub-dicitionary " << i << " input or output are not consistent with the rest of the training data." << c74::min::endl;
+                    object_free(maxDict); 
                     return {};
                 }
             }
 
             rapidLib::trainingExample tempExample;
+            //tempExample.input = from_atoms<std::vector<double>>(input_atoms);
+            //tempExample.output = from_atoms<std::vector<double>>(output_atoms);
+
             if (rapidmax_fill_training_example(tempExample.input, input_size, input_atoms) || rapidmax_fill_training_example(tempExample.output,output_size, output_atoms))
             {
                 cerr << "Contents of sub-dictionary " << i << " input or output was not of a readable type(Long, Float)";
+                object_free(maxDict); 
                 return {};
             }
 
@@ -170,7 +178,7 @@ public:
         {
             cout << "Model is not trained" << c74::min::endl;
         }
-
+        object_free(maxDict);
         return {};
     };
 
@@ -180,13 +188,21 @@ public:
         if (!trained)
         {
             cerr << "Train before running." << c74::min::endl;
+        }
+        else
+        {
+            std::vector<double> inputData = from_atoms<std::vector<double>>(args);
+            outlet_1.send(to_atoms<std::vector<double>>(regressionModels.run(inputData)));
+        }
+        return {};
+    };
+
+    message<> symbol { this, "traain", "Use a dictionary to define the pattern of bangs produced.",
+        MIN_FUNCTION
+        {
+            cout << "testing " << args[0] << c74::min::endl;
             return {};
         }
-
-        std::vector<double> inputData = from_atoms<std::vector<double>>(args);
-        outlet_1.send(to_atoms<std::vector<double>>(regressionModels.run(inputData)));
-        
-        return {};
     };
 
     message<> dictionary{ this, "dictionary", "Use a dictionary to define the pattern of bangs produced.", train };
@@ -208,6 +224,7 @@ public:
 private:
     rapidLib::regression regressionModels;
     bool trained = false;
+
 };
 
 MIN_EXTERNAL(rapid_regression);
