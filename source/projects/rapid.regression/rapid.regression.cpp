@@ -77,7 +77,7 @@ public:
             return {};
         }
 
-        t_dictionary* maxDict = static_cast<c74::max::t_object*>(minDict);
+        t_dictionary* maxDict = (t_dictionary*)(t_object*)minDict;
 
         t_symbol** keys = NULL;
         long numkeys = 0;
