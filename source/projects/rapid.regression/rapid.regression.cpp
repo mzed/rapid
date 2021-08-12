@@ -21,8 +21,8 @@ public:
     outlet<> outlet_2{ this, "(bang) when finished training", "bang" };
 
     //TODO: Should have some attributes for MLP parameters
-  
-    argument<symbol> dict_arg{ this, "trainingDict", "Dictionary of training examples.", 
+
+    argument<symbol> dict_arg { this, "trainingDict", "Dictionary of training examples.", 
         MIN_ARGUMENT_FUNCTION {
             trainingDict = arg;
         } 
@@ -30,13 +30,14 @@ public:
 
     attribute<symbol>  trainingDict{ this, "trainingDict", "",  description {"Dictionary of training examples"} };
 
-    
+    /*
     rapid_regression(const atoms& args = {})
     {
         //if (!args.empty()) training_dict = dict(args[0]);
         //cout << "dict " << training_dict[0] << c74::min::endl;
         //c74::max::dictionary_new();
     }
+    */
 
     int rapidmax_fill_training_example(std::vector<double>& v, long argc, c74::max::t_atom* argv)
     {
