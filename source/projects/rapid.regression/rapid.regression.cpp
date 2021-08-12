@@ -21,10 +21,16 @@ public:
     outlet<> outlet_2{ this, "(bang) when finished training", "bang" };
 
     //TODO: Should have some attributes for MLP parameters
-    //attribute<symbol>  dict_name{ this, "dict name", ""};
+  
+    argument<symbol> dict_arg{ this, "trainingDict", "Dictionary of training examples.", 
+        MIN_ARGUMENT_FUNCTION {
+            trainingDict = arg;
+        } 
+    };
 
-    argument<anything> dict_arg{ this, "dictionary-syntax", "Dictionary to train from." };
+    attribute<symbol>  trainingDict{ this, "trainingDict", "",  description {"Dictionary of training examples"} };
 
+    
     rapid_regression(const atoms& args = {})
     {
         //if (!args.empty()) training_dict = dict(args[0]);
@@ -65,20 +71,29 @@ public:
     {
         using namespace c74::max;
         std::vector<rapidLib::trainingExample> trainingSet;
-        dict minDict { args[0] };
-        
-        if (minDict.valid()) 
+        c74::min::symbol dictionaryName = NULL;
+
+        if (args.size() > 0)
         {
-            cout << "Found dictionary " << minDict.name() << c74::min::endl;
+            dictionaryName = args[0];
         }
         else
         {
-            cerr << args[0] << " is not a dictionary." << c74::min::endl;
-            return {};
+            dictionaryName = (c74::min::symbol)trainingDict;
         }
 
-        t_dictionary* maxDict = (t_dictionary*)(t_object*)minDict;
+        t_dictionary* maxDict = dictobj_findregistered_retain(dictionaryName);
 
+        if (maxDict) 
+        {
+            cout << "Found dictionary " << dictionaryName << c74::min::endl;
+        }
+        else
+        {
+            cerr << dictionaryName << " is not a dictionary." << c74::min::endl;
+            return {};
+        }
+        
         t_symbol** keys = NULL;
         long numkeys = 0;
         dictionary_getkeys(maxDict, &numkeys, &keys);
@@ -197,15 +212,10 @@ public:
         return {};
     };
 
-    message<> symbol { this, "traain", "Use a dictionary to define the pattern of bangs produced.",
-        MIN_FUNCTION
-        {
-            cout << "testing " << args[0] << c74::min::endl;
-            return {};
-        }
-    };
+    message<> symbol { this, "train", "Use a dictionary of examples to train a regression model.", train };
 
-    message<> dictionary{ this, "dictionary", "Use a dictionary to define the pattern of bangs produced.", train };
+    //FIXME: This isn't finding a Max dictionary.
+    //message<> dictionary{ this, "dictionary", "Use a dictionary of examples to train a regression model.", train };
 
     message<> list{ this, "list", "predict an output", run };
 
@@ -224,7 +234,6 @@ public:
 private:
     rapidLib::regression regressionModels;
     bool trained = false;
-
 };
 
 MIN_EXTERNAL(rapid_regression);
