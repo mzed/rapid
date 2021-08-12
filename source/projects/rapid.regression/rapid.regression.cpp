@@ -72,7 +72,7 @@ public:
     {
         using namespace c74::max;
         std::vector<rapidLib::trainingExample> trainingSet;
-        c74::min::symbol dictionaryName = NULL;
+        c74::min::symbol dictionaryName = "";
 
         if (args.size() > 0)
         {
