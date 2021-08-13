@@ -68,6 +68,13 @@ public:
         return 0;
     }
 
+    c74::min::function initialize = MIN_FUNCTION
+    {
+        regressionModels.reset();
+        trained = false;
+        return {};
+    };
+
     c74::min::function train = MIN_FUNCTION
     {
         using namespace c74::max;
@@ -213,11 +220,73 @@ public:
         return {};
     };
 
-    message<> symbol { this, "train", "Use a dictionary of examples to train a regression model.", train };
+    c74::min::function write = MIN_FUNCTION
+    {
+        if (trained)
+        {
+            using namespace c74::max;
+            short numtypes = 1;
+            short path;
+            t_symbol* s = (args.size() > 0) ? args[0] : "";
+
+            std::string filename("myRegressionModel.json"); //This could be generalized 
+
+            char* cfilename = new char[filename.length() + 1];
+            strcpy(cfilename, filename.c_str());
+
+            //TODO: factor all of this into the if
+            t_fourcc type;
+            t_fourcc typelist = 'json';
+
+            if (s == gensym("")) {      // if no argument supplied, ask for file
+                if (saveasdialog_extended(cfilename, &path, &type, &typelist, numtypes))     // non-zero: user cancelled
+                {
+                    return {};
+                }
+            }
+            else {
+                strcpy(cfilename, s->s_name);
+                path = path_getdefault();
+            }
+
+            char absoluteFilename[512];
+            short fileAlreadyExists = 0;
+            if (path_topotentialname(path, cfilename, absoluteFilename, fileAlreadyExists))
+            {
+                cerr << "Can not write to " << absoluteFilename <<c74::min::endl;
+                return {};
+            }
+            else
+            {
+                if (fileAlreadyExists)
+                {
+                   cwarn << absoluteFilename << " will be overwritten" << c74::min::endl;
+                }
+            }
+
+            std::string str(absoluteFilename);
+
+            //Very crude file path formatting, couldn't find a good way of finding the name of the root folder to minus off the absolute path.
+            str.erase(str.begin(), str.begin() + str.find_first_of(":") + 1);
+
+            cout << "Writing model to " << str.data() << c74::min::endl;
+
+            regressionModels.writeJSON(str);
+        }
+        else
+        {
+            cerr << "Model not trained." << c74::min::endl;
+        }
+
+        return {};
+    };
+
+    message<> train_msg { this, "train", "Use a dictionary of examples to train a regression model.", train };
+    message<> write_msg { this, "write", "Write a trained model as a json file.", write };
+    message<> init_msg{ this, "init", "Reset model to untrained state", initialize };
 
     //FIXME: This isn't finding a Max dictionary.
     //message<> dictionary{ this, "dictionary", "Use a dictionary of examples to train a regression model.", train };
-
     message<> list{ this, "list", "predict an output", run };
 
     message<> maxclass_setup
