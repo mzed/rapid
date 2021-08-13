@@ -80,7 +80,7 @@ public:
         }
         else
         {
-            dictionaryName = (c74::min::symbol)trainingDict;
+            dictionaryName = trainingDict.get();
         }
 
         t_dictionary* maxDict = dictobj_findregistered_retain(dictionaryName);
