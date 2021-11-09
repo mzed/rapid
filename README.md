@@ -3,6 +3,8 @@ Max implementation of RapidLib
 
 ## building
 
+Start in top directory of repository
+
 Configure macOS:
 `mkdir build && cd build && cmake -G Xcode ..`
 
