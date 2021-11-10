@@ -283,7 +283,7 @@ public:
 
     message<> train_msg { this, "train", "Use a dictionary of examples to train a regression model.", train };
     message<> write_msg { this, "write", "Write a trained model as a json file.", write };
-    message<> init_msg{ this, "init", "Reset model to untrained state", initialize };
+    message<> init_msg { this, "init", "Reset model to untrained state", initialize };
 
     //FIXME: This isn't finding a Max dictionary.
     //message<> dictionary{ this, "dictionary", "Use a dictionary of examples to train a regression model.", train };
