@@ -44,7 +44,7 @@ public:
         using namespace c74::max;
         t_atom* p;
         long i;
-        for (i = 0, p = argv; i < argc; i++, p++)
+        for (i = 0, p = argv; i < argc; ++i, ++p)
         {
             switch (atom_gettype(p))
             {
@@ -168,7 +168,7 @@ public:
             {
                 if (trainingSet[i - 1].input.size() != input_size || trainingSet[i - 1].output.size() != output_size)
                 {
-                    cerr << "Dimentions of sub-dicitionary " << i << " input or output are not consistent with the rest of the training data." << c74::min::endl;
+                    cerr << "Dimensions of sub-dicitionary " << i << " input or output are not consistent with the rest of the training data." << c74::min::endl;
                     object_free(maxDict); 
                     return {};
                 }
@@ -287,6 +287,7 @@ public:
 
     //FIXME: This isn't finding a Max dictionary.
     //message<> dictionary{ this, "dictionary", "Use a dictionary of examples to train a regression model.", train };
+
     message<> list{ this, "list", "predict an output", run };
 
     message<> maxclass_setup
@@ -294,8 +295,8 @@ public:
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            cout << "rapid.regression v1.0" << c74::min::endl;
-            cout << "by Sam Parke-Wolf, Marting Townley & Michael Zbyszynski" << c74::min::endl;
+            cout << "rapid.regression v0.0.1" << c74::min::endl;
+            cout << "by Sam Parke-Wolf, Martin Townley & Michael Zbyszynski" << c74::min::endl;
             cout << "Copyright (c) 2021 Goldsmiths, University of London" << c74::min::endl;
             return {};
         }
