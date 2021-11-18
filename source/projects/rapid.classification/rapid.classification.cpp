@@ -8,7 +8,7 @@
 
 using namespace c74::min;
 
-class rapid.classification : public object<rapid.classification>
+class rapid_classification : public object<rapid_classification>
 {
 public:
     MIN_DESCRIPTION{ "Train and run a classification model." };
