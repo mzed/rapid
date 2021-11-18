@@ -1,5 +1,5 @@
 {
-	"author" : "Francesco Di Maggio, Sam Parke-Wolf, Atau Tanaka, Martin Townley, and Michael Zbyszyński",
+	"author" : "Francesco Di Maggio, Sam Parke-Wolf, Atau Tanaka, Martin Townley, Federico Visi, and Michael Zbyszyński",
 	"description" : "A Max implementation of the RapidLib",
 	"homepatcher" : "rapidmax.maxpat",
 	"max_version_min" : "8.0", "max_version_max" : "none",
