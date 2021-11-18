@@ -42,7 +42,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/source/min-lib/CMakeLists.txt")
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/source/min-lib)
 endif ()
 
-# Add rapidlib, if it exists
+# Add rapidLib
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/RapidLib/src)
 
 # Generate a project for every folder in the "source/projects" folder
