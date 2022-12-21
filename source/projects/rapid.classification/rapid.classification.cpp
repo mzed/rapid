@@ -286,9 +286,9 @@ public:
         this, "maxclass_setup",
         MIN_FUNCTION 
         {
-            cout << "rapid.classification v0.0.1" << c74::min::endl;
+            cout << "rapid.classification v0.0.4" << c74::min::endl;
             cout << "by Sam Parke-Wolf, Martin Townley & Michael Zbyszynski" << c74::min::endl;
-            cout << "Copyright (c) 2021 Goldsmiths, University of London" << c74::min::endl;
+            cout << "Copyright (c) 2021-2 Goldsmiths, University of London" << c74::min::endl;
             return {};
         }
     };

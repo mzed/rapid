@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(mzed)
+project(rapid)
 
 string(REGEX REPLACE "(.*)/" "" THIS_PACKAGE_NAME "${CMAKE_CURRENT_SOURCE_DIR}")
 

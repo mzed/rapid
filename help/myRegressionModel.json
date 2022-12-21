@@ -1,0 +1,81 @@
+{
+	"metadata" : 
+	{
+		"creator" : "Rapid API C++",
+		"inputNames" : [ "inputs-1", "inputs-2", "inputs-1", "inputs-2" ],
+		"numInputs" : 2,
+		"numOutputs" : 2,
+		"version" : "v0.1.1"
+	},
+	"modelSet" : 
+	[
+		{
+			"inBases" : [ 2, 2 ],
+			"inRanges" : [ 1, 1 ],
+			"inputNames" : [ "inputs-1", "inputs-2", "inputs-1", "inputs-2" ],
+			"modelType" : "Neural Network",
+			"nodes" : 
+			[
+				{
+					"Node 1" : -2.1463192116643506,
+					"Node 2" : 0.56674681545450267,
+					"Threshold" : 0.8153857691269506,
+					"name" : "Linear Node 0"
+				},
+				{
+					"Attrib inputs-1" : -1.6440599258852069,
+					"Attrib inputs-2" : -0.9445283401874085,
+					"Threshold" : 0.12178440796651231,
+					"name" : "Sigmoid Node 1"
+				},
+				{
+					"Attrib inputs-1" : 0.23815369061221356,
+					"Attrib inputs-2" : 0.32528669813651112,
+					"Threshold" : -0.065549862911529366,
+					"name" : "Sigmoid Node 2"
+				}
+			],
+			"numHiddenLayers" : 1,
+			"numHiddenNodes" : 2,
+			"numHiddenOutputs" : 1,
+			"numInputs" : 2,
+			"outBase" : 600,
+			"outRange" : 300,
+			"whichInputs" : [ 0, 1, 2, 3 ]
+		},
+		{
+			"inBases" : [ 2, 2 ],
+			"inRanges" : [ 1, 1 ],
+			"inputNames" : [ "inputs-1", "inputs-2", "inputs-1", "inputs-2" ],
+			"modelType" : "Neural Network",
+			"nodes" : 
+			[
+				{
+					"Node 1" : -2.146319211664351,
+					"Node 2" : 0.56674681545450112,
+					"Threshold" : 0.81538576912695182,
+					"name" : "Linear Node 0"
+				},
+				{
+					"Attrib inputs-1" : -1.6440599258852067,
+					"Attrib inputs-2" : -0.94452834018740761,
+					"Threshold" : 0.12178440796651198,
+					"name" : "Sigmoid Node 1"
+				},
+				{
+					"Attrib inputs-1" : 0.23815369061221298,
+					"Attrib inputs-2" : 0.32528669813651134,
+					"Threshold" : -0.065549862911529089,
+					"name" : "Sigmoid Node 2"
+				}
+			],
+			"numHiddenLayers" : 1,
+			"numHiddenNodes" : 2,
+			"numHiddenOutputs" : 1,
+			"numInputs" : 2,
+			"outBase" : 6.5999999999999996,
+			"outRange" : 3.3000000000000003,
+			"whichInputs" : [ 0, 1, 2, 3 ]
+		}
+	]
+}
