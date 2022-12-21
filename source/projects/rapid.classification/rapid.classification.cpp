@@ -20,12 +20,10 @@ public:
     outlet<> outlet_1{ this, "(list) prediction based on input" };
     outlet<> outlet_2{ this, "(bang) when finished training", "bang" };
 
-    //TODO: Should have some attributes for MLP parameters
+    //TODO: Should have some attributes for knn parameters
 
     argument<symbol> dict_arg { this, "trainingDict", "Dictionary of training examples.", 
-        MIN_ARGUMENT_FUNCTION {
-            trainingDict = arg;
-        } 
+        MIN_ARGUMENT_FUNCTION { trainingDict = arg; } 
     };
 
     attribute<symbol>  trainingDict{ this, "trainingDict", "",  description {"Dictionary of training examples"} };
@@ -94,16 +92,16 @@ public:
         }
         
         t_symbol** keys = NULL;
-        long numkeys = 0;
-        dictionary_getkeys(maxDict, &numkeys, &keys);
+        long numKeys = 0;
+        dictionary_getkeys(maxDict, &numKeys, &keys);
         
-        if (!numkeys)
+        if (!numKeys)
         {
             cerr << "Dictionary is empty" << c74::min::endl;
             object_free(maxDict);
             return {};
         }
-        cout << "Training on " << numkeys << " examples." << c74::min::endl;
+        cout << "Training on " << numKeys << " examples." << c74::min::endl;
 
         //Variables for subdictionaries.
         t_object* subdict_obj = nullptr;
@@ -111,27 +109,29 @@ public:
         long numsubkeys = 0;
         t_symbol** subkeys = NULL;
 
-        for (size_t i = 0; i < numkeys; ++i)
+        for (size_t key { 0 }; key < numKeys; ++key)
         {
             //Make sure the elements of the dict are the right type.
-            if (!dictionary_entryisdictionary(maxDict, keys[i]))
+            if (!dictionary_entryisdictionary(maxDict, keys[key]))
             {
-                cout << "Dictionary element " << i << " is not a sub-dictionary" << c74::min::endl;
+                cout << "Dictionary element " << key << " is not a sub-dictionary" << c74::min::endl;
                 object_free(maxDict); 
                 return {};
             }
 
             //Getting the subdict weird mapping at the point.
-            dictionary_getdictionary(maxDict, keys[i], &subdict_obj);
+            dictionary_getdictionary(maxDict, keys[key], &subdict_obj);
             subdict = (t_dictionary*)subdict_obj;
 
             //Getting the keys of the subdict.
             dictionary_getkeys(subdict, &numsubkeys, &subkeys);
 
-            long    input_size = 0, output_size = 0;
+            long input_size { 0 };
+            long output_size{ 0 };
             t_atom* input_atoms,* output_atoms = NULL;
            
-            bool has_input = false, has_output = false;
+            bool has_input{ false };
+            bool has_output{ false };
 
             //Getting the atoms in the subdict
             for (size_t j = 0; j < numsubkeys; ++j)
@@ -150,16 +150,16 @@ public:
 
             if (!has_input || !has_output)
             {
-                cerr << "Contents of sub-dicitionary " << i << " does not have an input and output" << c74::min::endl;
+                cerr << "Contents of sub-dicitionary " << key << " does not have an input and output" << c74::min::endl;
                 object_free(maxDict); 
                 return {};
             }
 
-            if (i) //FIXME: this is weird
+            if (key) //FIXME: this is weird
             {
-                if (trainingSet[i - 1].input.size() != input_size || trainingSet[i - 1].output.size() != output_size)
+                if (trainingSet[key - 1].input.size() != input_size || trainingSet[key - 1].output.size() != output_size)
                 {
-                    cerr << "Dimensions of sub-dicitionary " << i << " input or output are not consistent with the rest of the training data." << c74::min::endl;
+                    cerr << "Dimensions of sub-dicitionary " << key << " input or output are not consistent with the rest of the training data." << c74::min::endl;
                     object_free(maxDict); 
                     return {};
                 }
@@ -171,7 +171,7 @@ public:
 
             if (rapidmax_fill_training_example(tempExample.input, input_size, input_atoms) || rapidmax_fill_training_example(tempExample.output,output_size, output_atoms))
             {
-                cerr << "Contents of sub-dictionary " << i << " input or output was not of a readable type(Long, Float)";
+                cerr << "Contents of sub-dictionary " << key << " input or output was not of a readable type(Long, Float)";
                 object_free(maxDict); 
                 return {};
             }
