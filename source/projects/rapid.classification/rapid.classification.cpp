@@ -61,6 +61,7 @@ public:
     {
         classificationModels.reset();
         trained = false;
+        cout << "initialized" << c74::min::endl;
         return {};
     };
 
@@ -216,8 +217,8 @@ public:
         if (trained)
         {
             using namespace c74::max;
-            short numtypes = 1;
-            short path;
+            short numtypes{ 1 };
+            
             t_symbol* s = (args.size() > 0) ? args[0] : "";
 
             std::string filename("myClassificationModel.json"); //This could be generalized 
@@ -226,11 +227,12 @@ public:
             strcpy(cfilename, filename.c_str());
 
             //TODO: factor all of this into the if
-            t_fourcc type;
-            t_fourcc typelist = 'json';
+            short path;
+            t_fourcc outtype{};
+            t_fourcc filetype{ 'JSON' };
 
             if (s == gensym("")) {      // if no argument supplied, ask for file
-                if (saveasdialog_extended(cfilename, &path, &type, &typelist, numtypes))     // non-zero: user cancelled
+                if (saveasdialog_extended(cfilename, &path, &outtype, &filetype, numtypes))     // non-zero: user cancelled
                 {
                     return {};
                 }
@@ -272,8 +274,63 @@ public:
         return {};
     };
 
+    c74::min::function read = MIN_FUNCTION
+    {
+        using namespace c74::max;
+        //This should be initialize. Factor out of min function?
+        {
+            classificationModels.reset();
+            trained = false;
+        }
+
+        char cfilename[MAX_PATH_CHARS];
+        short path;
+        t_fourcc outtype{};
+        t_fourcc filetype { 'JSON' };
+        short numtypes{ 1 };
+
+        t_symbol* s = (args.size() > 0) ? args[0] : "";
+
+        if (s == gensym(""))
+        {      // if no argument supplied, ask for file
+            if (open_dialog(cfilename, &path, &outtype, &filetype, numtypes)) // non-zero: user cancelled
+            return {};
+        }
+        else
+        {
+            strcpy(cfilename, s->s_name);    // must copy symbol before calling locatefile_extended
+            if (locatefile_extended(cfilename, &path, &outtype, &filetype, 1)) // non-zero: not found
+            {
+                cwarn << s->s_name << " not found" << c74::min::endl;
+                return {};
+            }
+        }
+
+        char absoluteFilename[512];
+        if (path_topathname(path, cfilename, absoluteFilename))
+        {
+            cwarn << "Could not find " << absoluteFilename << c74::min::endl;
+            return {};
+        }
+
+        std::string str(absoluteFilename);
+
+        //Very crude file path formatting, couldn't find a good way of finding the name of the root folder to minus off the absolute path.
+        str.erase(str.begin(), str.begin() + str.find_first_of(":") + 1);
+
+        if (classificationModels.readJSON(str))
+        {
+            cout << "Read model at: " << str << c74::min::endl;
+            outlet_2.send("bang");
+            trained = true;
+        }
+        
+        return {};
+    };
+
     message<> train_msg { this, "train", "Use a dictionary of examples to train a classification model.", train };
     message<> write_msg { this, "write", "Write a trained model as a json file.", write };
+    message<> read_msg{ this, "read", "Read a trained model from a json file.", read };
     message<> init_msg { this, "init", "Reset model to untrained state", initialize };
 
     //FIXME: This isn't finding a Max dictionary.
@@ -295,7 +352,7 @@ public:
 
 private:
     rapidLib::classification classificationModels;
-    bool trained = false;
+    bool trained{ false };
 };
 
 MIN_EXTERNAL(rapid_classification);

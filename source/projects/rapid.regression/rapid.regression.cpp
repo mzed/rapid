@@ -42,25 +42,25 @@ public:
         using namespace c74::max;
         t_atom* p;
         long i;
-        for (i = 0 , p = argv ; i < argc; ++i, ++p)
+        for (i = 0, p = argv; i < argc; ++i, ++p)
         {
             switch (atom_gettype(p))
             {
                 //Convert the atom into a type.
-                case A_LONG:
-                {
-                    v.push_back(atom_getlong(p));
-                    break;
-                }
-                case A_FLOAT:
-                {
-                    v.push_back(atom_getfloat(p));
-                    break;
-                }
-                default:
-                {
-                    return false;
-                }
+            case A_LONG:
+            {
+                v.push_back(atom_getlong(p));
+                break;
+            }
+            case A_FLOAT:
+            {
+                v.push_back(atom_getfloat(p));
+                break;
+            }
+            default:
+            {
+                return false;
+            }
             }
         }
         return true;
@@ -70,6 +70,7 @@ public:
     {
         regressionModels.reset();
         trained = false;
+        cout << "initialized" << c74::min::endl;
         return {};
     };
 
@@ -111,7 +112,7 @@ public:
             return {};
         }
         cout << "Training on " << numKeys << " examples." << c74::min::endl;
-      
+
         for (size_t key = 0; key < numKeys; ++key)
         {
             //Make sure the elements of the dict are the right type.
@@ -164,7 +165,7 @@ public:
 
             if (key) //FIXME: this is weird
             {
-                if (trainingSet[key - 1].input.size() != inputSize || 
+                if (trainingSet[key - 1].input.size() != inputSize ||
                     trainingSet[key - 1].output.size() != outputSize)
                 {
                     cerr << "Dimensions of sub-dicitionary " << key << " input or output are not consistent with the rest of the training data." << c74::min::endl;
@@ -177,7 +178,7 @@ public:
             //tempExample.input = from_atoms<std::vector<double>>(input_atoms);
             //tempExample.output = from_atoms<std::vector<double>>(output_atoms);
 
-            if (!rapidmax_fill_training_example(tempExample.input, inputSize, inputAtoms) || 
+            if (!rapidmax_fill_training_example(tempExample.input, inputSize, inputAtoms) ||
                 !rapidmax_fill_training_example(tempExample.output,outputSize, outputAtoms))
             {
                 cerr << "Contents of sub-dictionary " << key << " input or output was not of a readable type(Long, Float)";
@@ -284,51 +285,54 @@ public:
     c74::min::function read = MIN_FUNCTION
     {
         using namespace c74::max;
-       //This should be initialize. Factor out of min function?
+        //This should be initialize. Factor out of min function?
         {
-            regressionModels.reset();
+             regressionModels.reset();
             trained = false;
         }
 
-        t_symbol* s = (args.size() > 0) ? args[0] : "";
-        t_fourcc filetype = 'JSON', outtype;
-        short numtypes = 1;
-        char cfilename[MAX_PATH_CHARS];
-        short path;
-        if (s == gensym("")) 
-        {      // if no argument supplied, ask for file
-            if (open_dialog(cfilename, &path, &outtype, &filetype, numtypes)) // non-zero: user cancelled
-                return {};
-        }
-        else 
-        {
-            strcpy(cfilename, s->s_name);    // must copy symbol before calling locatefile_extended
-            if (locatefile_extended(cfilename, &path, &outtype, &filetype, 1)) // non-zero: not found
-            { 
-                cwarn << s->s_name << " not found" << c74::min::endl;
-                return {};
-            }
-        }
+     char cfilename[MAX_PATH_CHARS];
+     short path;
+     t_fourcc outtype{};
+     t_fourcc filetype { 'JSON' };
+     short numtypes{ 1 };
 
-        char absoluteFilename[512];
-        if (path_topathname(path, cfilename, absoluteFilename))
-        {
-            cwarn << "Could not find " << absoluteFilename << c74::min::endl;
-            return {};
-        }
+     t_symbol* s = (args.size() > 0) ? args[0] : "";
+     
+     if (s == gensym(""))
+     {      // if no argument supplied, ask for file
+         if (open_dialog(cfilename, &path, &outtype, &filetype, numtypes)) // non-zero: user cancelled
+             return {};
+     }
+     else
+     {
+         strcpy(cfilename, s->s_name);    // must copy symbol before calling locatefile_extended
+         if (locatefile_extended(cfilename, &path, &outtype, &filetype, 1)) // non-zero: not found
+         {
+             cwarn << s->s_name << " not found" << c74::min::endl;
+             return {};
+         }
+     }
 
-        std::string str(absoluteFilename);
+     char absoluteFilename[512];
+     if (path_topathname(path, cfilename, absoluteFilename))
+     {
+         cwarn << "Could not find " << absoluteFilename << c74::min::endl;
+         return {};
+     }
 
-        //Very crude file path formatting, couldn't find a good way of finding the name of the root folder to minus off the absolute path.
-        str.erase(str.begin(), str.begin() + str.find_first_of(":") + 1);
+     std::string str(absoluteFilename);
 
-        if (regressionModels.readJSON(str))
-        {
-            cout << "Read model at: " << str << c74::min::endl;
-            outlet_2.send("bang");
-            trained = true;
-        }
-        return {};
+     //Very crude file path formatting, couldn't find a good way of finding the name of the root folder to minus off the absolute path.
+     str.erase(str.begin(), str.begin() + str.find_first_of(":") + 1);
+
+     if (regressionModels.readJSON(str))
+     {
+         cout << "Read model at: " << str << c74::min::endl;
+         outlet_2.send("bang");
+         trained = true;
+     }
+     return {};
     };
 
     message<> train_msg{ this, "train", "Use a dictionary of examples to train a regression model.", train };
@@ -355,7 +359,7 @@ public:
 
 private:
     rapidLib::regression regressionModels;
-    bool trained { false };
+    bool trained{ false };
 };
 
 MIN_EXTERNAL(rapid_regression);
