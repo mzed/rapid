@@ -111,13 +111,7 @@ public:
             return {};
         }
         cout << "Training on " << numKeys << " examples." << c74::min::endl;
-
-        //Variables for subdictionaries.
-        t_object* subdict_obj = nullptr;
-        t_dictionary* subdict = nullptr;
-        long numSubKeys{ 0 };
-        t_symbol** subKeys{ NULL };
-
+      
         for (size_t key = 0; key < numKeys; ++key)
         {
             //Make sure the elements of the dict are the right type.
@@ -129,11 +123,14 @@ public:
             }
 
             //Getting the subdict weird mapping at the point.
-            dictionary_getdictionary(maxDict, keys[key], &subdict_obj);
-            subdict = (t_dictionary*)subdict_obj;
+            t_object* subDictObj{ nullptr };
+            dictionary_getdictionary(maxDict, keys[key], &subDictObj);
+            t_dictionary* subDict = (t_dictionary*)subDictObj;
 
             //Getting the keys of the subdict.
-            dictionary_getkeys(subdict, &numSubKeys, &subKeys);
+            long numSubKeys{ 0 };
+            t_symbol** subKeys{ NULL };
+            dictionary_getkeys(subDict, &numSubKeys, &subKeys);
 
             long inputSize { 0 };
             long outputSize{ 0 };
@@ -148,12 +145,12 @@ public:
             {
                 if (strcmp(subKeys[subKey]->s_name,  "input") == 0)
                 {
-                    dictionary_getatoms(subdict, subKeys[subKey], &inputSize, &inputAtoms);
+                    dictionary_getatoms(subDict, subKeys[subKey], &inputSize, &inputAtoms);
                     hasInput = true;
                 }
                 if (strcmp(subKeys[subKey]->s_name,  "output") == 0)
                 {
-                    dictionary_getatoms(subdict, subKeys[subKey], &outputSize, &outputAtoms);
+                    dictionary_getatoms(subDict, subKeys[subKey], &outputSize, &outputAtoms);
                     hasOutput = true;
                 }
             }
@@ -180,8 +177,8 @@ public:
             //tempExample.input = from_atoms<std::vector<double>>(input_atoms);
             //tempExample.output = from_atoms<std::vector<double>>(output_atoms);
 
-            if (rapidmax_fill_training_example(tempExample.input, inputSize, inputAtoms) || 
-                rapidmax_fill_training_example(tempExample.output,outputSize, outputAtoms))
+            if (!rapidmax_fill_training_example(tempExample.input, inputSize, inputAtoms) || 
+                !rapidmax_fill_training_example(tempExample.output,outputSize, outputAtoms))
             {
                 cerr << "Contents of sub-dictionary " << key << " input or output was not of a readable type(Long, Float)";
                 object_free(maxDict);
