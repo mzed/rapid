@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 109.0, 109.0, 820.0, 620.0 ],
+		"rect" : [ 109.0, 116.0, 820.0, 620.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -123,7 +123,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 109.0, 135.0, 820.0, 594.0 ],
+						"rect" : [ 0.0, 26.0, 820.0, 594.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -904,6 +904,19 @@
 , 							{
 								"box" : 								{
 									"color" : [ 0.611764705882353, 0.831372549019608, 0.4, 1.0 ],
+									"data" : 									{
+										"example 1" : 										{
+											"input" : [ 3.0, 3.0 ],
+											"output" : [ 99.900000000000006, 1 ]
+										}
+,
+										"example 2" : 										{
+											"input" : [ 1.0, 1.0 ],
+											"output" : [ 33.299999999999997, 2 ]
+										}
+
+									}
+,
 									"id" : "obj-1",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
@@ -911,7 +924,7 @@
 									"outlettype" : [ "dictionary", "", "", "" ],
 									"patching_rect" : [ 170.0, 506.0, 163.0, 22.0 ],
 									"saved_object_attributes" : 									{
-										"embed" : 0,
+										"embed" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -1033,7 +1046,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 56.0, 218.0, 219.0, 20.0 ],
+									"patching_rect" : [ 56.0, 218.0, 189.0, 20.0 ],
 									"text" : "Train on the data in the dictionary:"
 								}
 
@@ -1077,13 +1090,23 @@
 							}
 , 							{
 								"box" : 								{
+									"bgcolor" : [ 0.376470588235294, 0.384313725490196, 0.4, 1.0 ],
+									"bgcolor2" : [ 0.376470588235294, 0.384313725490196, 0.4, 1.0 ],
+									"bgfillcolor_angle" : 270.0,
+									"bgfillcolor_color" : [ 0.611764705882353, 0.831372549019608, 0.4, 1.0 ],
+									"bgfillcolor_color1" : [ 0.376470588235294, 0.384313725490196, 0.4, 1.0 ],
+									"bgfillcolor_color2" : [ 0.290196078431373, 0.309803921568627, 0.301960784313725, 1.0 ],
+									"bgfillcolor_proportion" : 0.39,
+									"bgfillcolor_type" : "color",
+									"gradient" : 1,
 									"id" : "obj-11",
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 253.0, 218.0, 32.0, 22.0 ],
-									"text" : "train"
+									"text" : "train",
+									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
 
 							}
@@ -1261,7 +1284,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 820.0, 594.0 ],
+						"rect" : [ 109.0, 142.0, 820.0, 594.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1291,6 +1314,18 @@
 						"showontab" : 2,
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
+								"box" : 								{
+									"id" : "obj-6",
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 234.0, 484.0, 33.0, 22.0 ],
+									"text" : "read"
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"format" : 6,
 									"id" : "obj-31",
@@ -1760,6 +1795,13 @@
 								"patchline" : 								{
 									"destination" : [ "obj-4", 0 ],
 									"source" : [ "obj-5", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-2", 0 ],
+									"source" : [ "obj-6", 0 ]
 								}
 
 							}
