@@ -360,7 +360,7 @@ public:
     this, "maxclass_setup",
     MIN_FUNCTION
     {
-      cout << "rapid.regression v0.0.4" << c74::min::endl;
+      cout << "rapid.regression v0.0.5" << c74::min::endl;
       cout << "by Sam Parke-Wolf, Martin Townley & Michael Zbyszynski" << c74::min::endl;
       cout << "Copyright (c) 2021-2 Goldsmiths, University of London" << c74::min::endl;
       return {};
