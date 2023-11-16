@@ -31,7 +31,7 @@ public:
   attribute<int>  k { this, "k", 1,
     description {"Number of neighbours to consider when classiftying"},
     setter { MIN_FUNCTION {
-      std::cout << "k = " << std::endl;
+      classificationModels.setK(0, args[0]);
       return args;
     }}
   };
@@ -352,7 +352,7 @@ public:
     this, "maxclass_setup",
     MIN_FUNCTION
     {
-      cout << "rapid.classification v0.0.5" << c74::min::endl;
+      cout << "rapid.classification v0.0.7" << c74::min::endl;
       cout << "by Sam Parke-Wolf, Martin Townley & Michael Zbyszynski" << c74::min::endl;
       cout << "Copyright (c) 2021-2 Goldsmiths, University of London" << c74::min::endl;
       return {};
