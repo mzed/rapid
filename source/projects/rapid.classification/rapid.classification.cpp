@@ -31,10 +31,11 @@ public:
   attribute<int>  k { this, "k", 1,
     description {"Number of neighbours to consider when classiftying"},
     setter { MIN_FUNCTION {
-      std::vector<int> current { classificationModels.getK() };
-      if (current.size() > 0 && args[0] != current[0])
+      const std::vector<int> current { classificationModels.getK() };
+      const int newK { static_cast<int>(atom_getlong(&args[0])) };
+      if (current.size() > 0 && newK != current[0])
       {
-        classificationModels.setK(0, args[0]);
+        classificationModels.setK(0, newK);
       }
       return args;
     }}
