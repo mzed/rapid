@@ -31,7 +31,7 @@ public:
   attribute<int>  k { this, "k", 1,
     description {"Number of neighbours to consider when classiftying"},
     setter { MIN_FUNCTION {
-      classificationModels.setK(0, k);
+      std::cout << "k = " << std::endl;
       return args;
     }}
   };
