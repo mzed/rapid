@@ -1,0 +1,36 @@
+{
+	"pattrstorage" : 	{
+		"name" : "my_classify_in_preset",
+		"slots" : 		{
+			"1" : 			{
+				"id" : 1,
+				"data" : 				{
+					"multislider[3]" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ],
+					"number[2]" : [ 5 ]
+				}
+
+			}
+,
+			"2" : 			{
+				"id" : 2,
+				"data" : 				{
+					"multislider[3]" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ],
+					"number[2]" : [ 5 ]
+				}
+
+			}
+,
+			"3" : 			{
+				"id" : 3,
+				"data" : 				{
+					"multislider[3]" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ],
+					"number[2]" : [ 5 ]
+				}
+
+			}
+
+		}
+
+	}
+
+}

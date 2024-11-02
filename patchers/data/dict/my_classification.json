@@ -1,0 +1,302 @@
+{
+	"training_example_1" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_2" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_3" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_4" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_5" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_6" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_7" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_8" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_9" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_10" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_11" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_12" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_13" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_14" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_15" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_16" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_17" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_18" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_19" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_20" : 	{
+		"output" : 0,
+		"input" : [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+	}
+,
+	"training_example_21" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_22" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_23" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_24" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_25" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_26" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_27" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_28" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_29" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_30" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_31" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_32" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_33" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_34" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_35" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_36" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_37" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_38" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_39" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_40" : 	{
+		"output" : 2,
+		"input" : [ 1.0, 1.0, 1.0, 1.0, 1.0 ]
+	}
+,
+	"training_example_41" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_42" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_43" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_44" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_45" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_46" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_47" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_48" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_49" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_50" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_51" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_52" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_53" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_54" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_55" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_56" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_57" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_58" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_59" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+,
+	"training_example_60" : 	{
+		"output" : 1,
+		"input" : [ -1.0, -1.0, -1.0, -1.0, -1.0 ]
+	}
+
+}
