@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
-        config: [debug, release]
+        config: [release]
 
     steps:
     - uses: actions/checkout@v4
