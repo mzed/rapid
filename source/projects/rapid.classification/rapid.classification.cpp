@@ -33,10 +33,12 @@ public:
     setter { MIN_FUNCTION {
       const std::vector<int> current { classificationModels.getK() };
       const int newK { static_cast<int>(atom_getlong(&args[0])) };
+      
       if (current.size() > 0 && newK != current[0])
       {
-        classificationModels.setK(0, newK);
+        for (int model {}; model < current.size(); model++) classificationModels.setK(model, newK);
       }
+      
       return args;
     }}
   };
