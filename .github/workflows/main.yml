@@ -106,8 +106,9 @@ jobs:
 
     - uses: actions/download-artifact@v4
       with:
-        name: ${{ github.event.repository.name }}-${{ steps.short-sha.outputs.sha }}-release
         path: ${{ github.event.repository.name }}
+        merge-multiple: true
+  
     
     - name: Display structure of downloaded files
       run: ls -R
